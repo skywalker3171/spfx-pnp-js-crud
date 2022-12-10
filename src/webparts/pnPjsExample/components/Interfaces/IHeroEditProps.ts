@@ -1,5 +1,5 @@
 export interface IHeroEditProps {
-  onClick: (Title: string, Power: string, heroState: string, ID: number) => void;
+  onClick: (Title: string, Power: string, color:string, HeroState: string, ID: number) => void;
     ID: number;
     HeroId: number;
     Title: string;

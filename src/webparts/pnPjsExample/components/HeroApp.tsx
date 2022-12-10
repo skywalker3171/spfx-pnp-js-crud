@@ -2,12 +2,12 @@ import * as React from 'react';
 import HeroEdit from './HeroEdit';
 import styles from './PnPjsExample.module.scss';
 
-import { Caching, ICachingProps  } from "@pnp/queryable";
+//import { Caching, ICachingProps  } from "@pnp/queryable";
 import { IHeroAppProps } from './Interfaces/IHeroAppProps';
 import { IResponseHeroItem } from './interfaces';
 import { Logger, LogLevel } from '@pnp/logging';
 import HeroLine from './HeroLine';
-import { SPFI, spfi  } from '@pnp/sp';
+import { SPFI  } from '@pnp/sp'; //t5
 import { getSP } from '../pnpjsConfig';
 import { IItemAddResult } from '@pnp/sp/items/types';
 
@@ -15,11 +15,11 @@ export interface IReactCrudWebPartProps {
   listName: string;
 }
 
-const cacheProps: ICachingProps = {
-    store: "session"
-};
+// const cacheProps: ICachingProps = {
+//     store: "session"
+// };
 
-export interface IIPnPjsExampleState {
+export interface IIHeroAppState {
     heroItems: IResponseHeroItem[];
     items: IResponseHeroItem[];
     errors: string[];
@@ -30,11 +30,12 @@ export interface IIPnPjsExampleState {
     Color: string;
 }
 
-export default class HeroApp extends React.Component<IHeroAppProps, IIPnPjsExampleState> {
+export default class HeroApp extends React.Component<IHeroAppProps, IIHeroAppState> {
   LOG_SOURCE: any;
   private _sp: SPFI;
+  //private myiar: IItemAddResult;
 
-  constructor(props: any) {
+  constructor(props: IHeroAppProps) {
     super(props);
     this.state = {
       heroItems: Array(1).fill({ Title: "Flash", Power: "Speed", Color: "white", HeroId: Math.random().toString(36).substr(2, 6) }),
@@ -50,33 +51,30 @@ export default class HeroApp extends React.Component<IHeroAppProps, IIPnPjsExamp
     this._sp = getSP();
   }
 
-  handleclick (heroname: string, superpower: string, heroState: string, Id: number) {
+  handleclick (heroname: string, superpower: string, color: string, heroState: string, Id: number) {
     
     if (this.state.HeroState == 'Add') {
-      alert('Hello Click - ADD ' + this.state.HeroState);
       this.setState({
         heroItems: this.state.heroItems.concat({
           Title: heroname,
           Power: superpower,
-          Color: "blue",
-          HeroId: Math.random(),
-          ID: Math.random()
+          Color: color,
+          HeroId: 123,
+          ID:0
         }),
         Title: '',
         Power: '',
         HeroId: ''
       });
 
-      alert(this.state.HeroState);
-      this._createItem();
+      this._createItem(heroname, superpower, color, Id);
     }
     else {
-      alert('Hello Click - change ' + Id);
       this.setState({
         heroItems: this.state.heroItems.map((i: IResponseHeroItem) => (i.ID == Id ? Object.assign({}, i, {
           Title: heroname,
           Power: superpower,
-          Color: "yellow",
+          Color: color,
           HeroId: Id,
           Id: Id
         }) : i)),
@@ -86,23 +84,8 @@ export default class HeroApp extends React.Component<IHeroAppProps, IIPnPjsExamp
         Power: '',
         HeroId: ''
       });
-      alert(this.state.HeroState);
-    }
-  }
 
-  private _createItem = async (): Promise<void> => {
-    try {
-      const iar: IItemAddResult = await this._sp.web.lists.getByTitle("Demolist").items.add({
-        Title: "Howdy Joey",
-        Power: "Super Power",
-        Color: "Green",
-        HeroID: "12345"
-      });
-      
-      console.log(iar);
-    } catch (err) {
-      console.warn(err);
-      //Logger.write(`${this.LOG_SOURCE} (_createItem) - ${JSON.stringify(err)} - `, LogLevel.Error);
+      //this._readAllHeroItems();
     }
   }
 
@@ -111,7 +94,6 @@ export default class HeroApp extends React.Component<IHeroAppProps, IIPnPjsExamp
   }
 
   handleChange(Id: number) {  
-    alert(Id);
     this.setState({
       Title: this.state.heroItems.filter((obj) => {return obj.ID == Id;})[0].Title,
       Power: this.state.heroItems.filter((obj) => {return obj.ID == Id;})[0].Power,
@@ -132,7 +114,7 @@ export default class HeroApp extends React.Component<IHeroAppProps, IIPnPjsExamp
                 Color={this.state.Color}
                 HeroId={+this.state.HeroId}
                 ID={+this.state.HeroId}
-                onClick={(heroname: string, superpower: string, heroState: string, Id: number) => this.handleclick(heroname, superpower, heroState, Id)}>
+                onClick={(heroname: string, superpower: string, color: string, heroState: string, Id: number) => this.handleclick(heroname, superpower, color, heroState, Id)}>
             </HeroEdit>
 
             <div className={styles.container}>
@@ -156,10 +138,10 @@ export default class HeroApp extends React.Component<IHeroAppProps, IIPnPjsExamp
 
   private _readAllHeroItems = async (): Promise<void> => {
     try {
-       const spCache = spfi(this._sp).using(Caching(cacheProps));
+       //const spCache = spfi(this._sp).using(Caching(cacheProps));
 
        console.log('started _readAllHeroItems');
-      const response: IResponseHeroItem[] = await spCache.web.lists
+      const response: IResponseHeroItem[] = await this._sp.web.lists
         .getByTitle("Demolist")
         .items
         .select("Id", "Title", "Color", "Power", "HeroID")();
@@ -178,9 +160,27 @@ export default class HeroApp extends React.Component<IHeroAppProps, IIPnPjsExamp
       // Add the items to the state
       this.setState({ heroItems: items });
       console.log('state set');
-      console.log('state: '+ this.state.heroItems.length);
+      console.log('state itmes: '+ this.state.heroItems.length);
     } catch (err) {
       Logger.write(`${this.LOG_SOURCE} (_readAllFilesSize) - ${JSON.stringify(err)} - `, LogLevel.Error);
+    }
+  }
+
+  private _createItem = async (Title: string, Power: string, Color: string, HeroId: number): Promise<void> => {
+    try {
+      const iar: IItemAddResult = await this._sp.web.lists.getByTitle("Demolist").items.add({
+        Title: Title,
+        Power: Power,
+        Color: Color,
+        HeroID: HeroId
+      });
+      
+      console.log(iar);
+      await this._readAllHeroItems();
+
+    } catch (err) {
+      console.warn(err);
+      //Logger.write(`${this.LOG_SOURCE} (_createItem) - ${JSON.stringify(err)} - `, LogLevel.Error);
     }
   }
 }

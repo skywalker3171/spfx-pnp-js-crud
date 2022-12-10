@@ -1,6 +1,7 @@
 export interface IHeroAppProps {
-  heroname: string;
-  superpower: string;
-  heroState: string;
-  heroId: string;
+  Title: string;
+  Power: string;
+  Color: string;
+  HeroState: string;
+  Id: string;
 }

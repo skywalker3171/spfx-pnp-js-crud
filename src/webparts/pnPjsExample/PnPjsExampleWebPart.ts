@@ -39,10 +39,11 @@ export default class PnPjsExampleWebPart extends BaseClientSideWebPart<IPnPjsExa
     const heroelement: React.ReactElement<IHeroAppProps> = React.createElement(
       HeroApp,
       {
-        heroname: null,
-        superpower: null,
-        heroState: null,
-        heroId: null
+        Title: null,
+        Power: null,
+        Color: null,
+        HeroState: null,
+        Id: null
       }
     );
 
