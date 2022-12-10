@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styles from './PnPjsExample.module.scss';
-import { IPnPjsExampleProps } from './IPnPjsExampleProps';
+import { IPnPjsExampleProps } from './Interfaces/IPnPjsExampleProps';
 
 // import interfaces
 import { IFile, IResponseHeroItem, IResponseItem } from "./interfaces";
@@ -143,6 +143,7 @@ export default class PnPjsExample extends React.Component<IPnPjsExampleProps, II
       // use map to convert IResponseItem[] into our internal object IFile[]
       const items: IResponseHeroItem[] = response.map((item: IResponseHeroItem) => {
         return {
+          ID: item.HeroId,
           HeroId: item.HeroId,
           Id: item.HeroId,
           Title: item.Title || "Unknown",

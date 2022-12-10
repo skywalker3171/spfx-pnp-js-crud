@@ -20,6 +20,7 @@ export interface IFile {
   }
 
   export interface IResponseHeroItem {
+    ID: number;
     HeroId: number;
     Title: string;
     Color: string;

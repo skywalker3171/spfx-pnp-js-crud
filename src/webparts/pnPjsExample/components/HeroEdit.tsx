@@ -1,50 +1,57 @@
 import * as React from 'react';
-import { IHeroEditProps } from './IHeroEditProps';
+//import { SPFI } from "@pnp/sp";
+import { IHeroEditProps } from './Interfaces/IHeroEditProps';
 import styles from './PnPjsExample.module.scss';
+//import { IItemAddResult } from '@pnp/sp/items/types';
 
 export interface IWTFState {
-    heroname: string,
-      superpower: string,
-      heroState: string,
-      heroId: string,
-      color: string,
-      Id: string
+    Title: string,
+      Power: string,
+      HeroState: string,
+      HeroId: string,
+      Color: string,
+      Id: number
   }
 
 class HeroEdit extends React.Component<IHeroEditProps, IWTFState> {
-  onClick: (heroname: string, superpower: string, heroState: string, heroId: string) => void;
+  //private LOG_SOURCE = "🅿PnPjsExample";
+  //private LIBRARY_NAME = "Documents";
+  //private _sp: SPFI;
+
+  onClick: (heroname: string, superpower: string, heroState: string, heroId: number) => void;
   constructor(props: IHeroEditProps) {
     super(props);
     this.state = {
-      heroname: props.heroname,
-      superpower: props.superpower,
-      heroState: props.heroState,
-      heroId: props.heroId,
-      color: "blue",
-      Id: "12345"
+      Title: props.Title,
+      Power: props.Power,
+      HeroState: props.HeroState,
+      HeroId: props.ID.toString(),
+      Color: props.Color,
+      Id: props.ID
     };
 
-    //this.handleChangeHero = this.handleChangeHero.bind(this);
-    //this.handleChangePower = this.handleChangePower.bind(this);
-    //this.onClick = this.props.onClick.bind(this);
+    this.handleChangeHero = this.handleChangeHero.bind(this);
+    this.handleChangePower = this.handleChangePower.bind(this);
+    this.onClick = this.props.onClick.bind(this);
   }
 
   handleChangeHero(event: any) : void{
-    this.setState({ heroname: event.target.value });
+    this.setState({ Title: event.target.value });
   }
 
   
   handleChangePower(event: any) : void{
-    this.setState({ superpower: event.target.value });
+    this.setState({ Power: event.target.value });
   }
 
-//   componentWillReceiveProps(nextProps: any) {
-//     // You don't have to do this check first, but it can help prevent an unneeded render
-//     this.setState({ heroState: nextProps.heroState });
-//     this.setState({ heroId: nextProps.heroId });
-//     this.setState({ heroname: nextProps.heroname });
-//     this.setState({ superpower: nextProps.superpower });
-//   }
+  componentWillReceiveProps(nextProps: IHeroEditProps) {
+    // You don't have to do this check first, but it can help prevent an unneeded render
+    this.setState({ 
+        HeroState: nextProps.HeroState,
+        Id: nextProps.HeroId,
+        Title: nextProps.Title, 
+        Power: nextProps.Power });
+  }
 
 
   render() {
@@ -55,19 +62,19 @@ class HeroEdit extends React.Component<IHeroEditProps, IWTFState> {
             <label>Name </label>
             </div>
             <div className='ms-Grid-col ms-u-sm3 block'>
-            <input type="text" placeholder="Superhero" name="heroname" value={this.state.heroname} onChange={this.handleChangeHero} />
+            <input type="text" placeholder="Superhero" name="heroname" value={this.state.Title} onChange={this.handleChangeHero} />
           </div>
           <div className='ms-Grid-col ms-u-sm1 block'>
             <label>Power</label>
             </div>
             <div className='ms-Grid-col ms-u-sm3 block'>
-            <input type="text" placeholder="Superpower" name="superpower" value={this.state.superpower} onChange={this.handleChangePower} />
+            <input type="text" placeholder="Superpower" name="superpower" value={this.state.Power} onChange={this.handleChangePower} />
           </div>
           <div className='ms-Grid-col ms-u-sm2 block'>
             <label> </label>
           </div>
           <div className='ms-Grid-col ms-u-sm2 block'>
-            <a href="#" className={`${styles.button} `} onClick={() => this.onClick(this.state.heroname, this.state.superpower, this.state.heroState, this.state.heroId)}>
+            <a href="#" className={`${styles.button} `} onClick={() => this.onClick(this.state.Title, this.state.Power, this.state.HeroState, this.state.Id)}>
               <span className={styles.label}>Save</span>
             </a>
           </div>
@@ -81,7 +88,7 @@ class HeroEdit extends React.Component<IHeroEditProps, IWTFState> {
             </div>
             <div className='ms-Grid-col ms-u-sm3 block'>
             <label>
-              <input type="text" placeholder="Id" name="Id" value={this.state.color} />
+              <input type="text" placeholder="Color" name="Color" value={this.state.Color} />
             </label>
           </div>
           <div className='ms-Grid-col ms-u-sm1 block'>
@@ -97,6 +104,8 @@ class HeroEdit extends React.Component<IHeroEditProps, IWTFState> {
       </div>
     );
   }
+
+  
 }
 
 export default HeroEdit;

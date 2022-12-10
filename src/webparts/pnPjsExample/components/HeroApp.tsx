@@ -3,12 +3,13 @@ import HeroEdit from './HeroEdit';
 import styles from './PnPjsExample.module.scss';
 
 import { Caching, ICachingProps  } from "@pnp/queryable";
-import { IHeroAppProps } from './IHeroAppProps';
+import { IHeroAppProps } from './Interfaces/IHeroAppProps';
 import { IResponseHeroItem } from './interfaces';
 import { Logger, LogLevel } from '@pnp/logging';
 import HeroLine from './HeroLine';
 import { SPFI, spfi  } from '@pnp/sp';
 import { getSP } from '../pnpjsConfig';
+import { IItemAddResult } from '@pnp/sp/items/types';
 
 export interface IReactCrudWebPartProps {
   listName: string;
@@ -22,10 +23,11 @@ export interface IIPnPjsExampleState {
     heroItems: IResponseHeroItem[];
     items: IResponseHeroItem[];
     errors: string[];
-    heroState: string;
-    heroName: string;
-    heroId: string;
-    superpower: string;
+    HeroState: string;
+    Title: string;
+    HeroId: string;
+    Power: string;
+    Color: string;
 }
 
 export default class HeroApp extends React.Component<IHeroAppProps, IIPnPjsExampleState> {
@@ -35,96 +37,110 @@ export default class HeroApp extends React.Component<IHeroAppProps, IIPnPjsExamp
   constructor(props: any) {
     super(props);
     this.state = {
-      heroItems: Array(1).fill({ Title: "Fiat", Power: "500", Color: "white", HeroId: Math.random().toString(36).substr(2, 9) }),
+      heroItems: Array(1).fill({ Title: "Flash", Power: "Speed", Color: "white", HeroId: Math.random().toString(36).substr(2, 6) }),
       items: [],
       errors: [],
-      heroState: null,
-      heroName: null,
-      superpower: null,
-      heroId: null
+      HeroState: null,
+      Title: null,
+      Power: null,
+      Color: null,
+      HeroId: null
     };
 
     this._sp = getSP();
   }
 
-  handleclick (heroname: string, superpower: string, heroState: string, Id: string) {
-    //alert('Hello Click')
-    // if (this.state.heroState == 'Add') {
-    //   this.setState({
-    //     heroes: this.state.heroes.concat({
-    //       name: heroname,
-    //       power: superpower,
-    //       color: "blue",
-    //       Id: Math.random().toString(36).substr(2, 9)
-    //     }),
-    //     heroName: '',
-    //     superpower: '',
-    //     heroId: ''
-    //   });
+  handleclick (heroname: string, superpower: string, heroState: string, Id: number) {
+    
+    if (this.state.HeroState == 'Add') {
+      alert('Hello Click - ADD ' + this.state.HeroState);
+      this.setState({
+        heroItems: this.state.heroItems.concat({
+          Title: heroname,
+          Power: superpower,
+          Color: "blue",
+          HeroId: Math.random(),
+          ID: Math.random()
+        }),
+        Title: '',
+        Power: '',
+        HeroId: ''
+      });
 
+      alert(this.state.HeroState);
+      this._createItem();
+    }
+    else {
+      alert('Hello Click - change ' + Id);
+      this.setState({
+        heroItems: this.state.heroItems.map((i: IResponseHeroItem) => (i.ID == Id ? Object.assign({}, i, {
+          Title: heroname,
+          Power: superpower,
+          Color: "yellow",
+          HeroId: Id,
+          Id: Id
+        }) : i)),
+
+        HeroState: 'Add',
+        Title: '',
+        Power: '',
+        HeroId: ''
+      });
+      alert(this.state.HeroState);
+    }
+  }
+
+  private _createItem = async (): Promise<void> => {
+    try {
+      const iar: IItemAddResult = await this._sp.web.lists.getByTitle("Demolist").items.add({
+        Title: "Howdy Joey",
+        Power: "Super Power",
+        Color: "Green",
+        HeroID: "12345"
+      });
       
-    //   this.createItem(heroname);
-    // }
-    // else {
-    //   //alert(Id)
-    //   this.setState({
-    //     heroes: this.state.heroes.map((car: { Id: string; }) => (car.Id === Id ? Object.assign({}, car, {
-    //       name: heroname,
-    //       power: superpower,
-    //       color: "yellow",
-    //       Id: Id
-    //     }) : car)),
-    //     heroState: 'Add',
-    //     heroName: '',
-    //     superpower: '',
-    //     heroId: ''
-    //   });
-    // }
+      console.log(iar);
+    } catch (err) {
+      console.warn(err);
+      //Logger.write(`${this.LOG_SOURCE} (_createItem) - ${JSON.stringify(err)} - `, LogLevel.Error);
+    }
   }
 
-  
-
-  handleDelete(Id: string) {
-    //this.setState((prevState: { heroes: any[]; }) => ({ heroes: prevState.heroes.filter((car: { Id: string; }) => car.Id !== Id) }));
+  handleDelete(Id: number) {
+    this.setState((prevState: { heroItems: any[]; }) => ({ heroItems: this.state.heroItems.filter((obj) => {return obj.HeroId !== Id;}) }));
   }
 
-  handleChange(Id: string) {  
-    // this.setState({
-    //   heroName: this.state.heroes.filter((car: { Id: string; }) => car.Id == Id)[0].name,
-    //   superpower: this.state.heroes.filter((car: { Id: string; }) => car.Id == Id)[0].power,
-    //   heroState: 'Edit',
-    //   heroId: Id
-    // });
+  handleChange(Id: number) {  
+    alert(Id);
+    this.setState({
+      Title: this.state.heroItems.filter((obj) => {return obj.ID == Id;})[0].Title,
+      Power: this.state.heroItems.filter((obj) => {return obj.ID == Id;})[0].Power,
+      Color: this.state.heroItems.filter((obj) => {return obj.ID == Id;})[0].Color,
+      HeroState: 'Edit',
+      HeroId: Id.toString(),
+    });
   }
 
   render() {
     console.log('started render');
     return (
         <div className={styles.reactCrud}>
-            <HeroEdit heroname={this.state.heroName}
-                onClick={(heroname, superpower, heroState, Id) => this.handleclick(heroname, superpower, heroState, Id)}
-                heroState={this.state.heroState}
-                superpower={this.state.superpower}
-                heroId={this.state.heroId}>
+          <input type="text" value={this.state.HeroState} />
+            <HeroEdit Title={this.state.Title}
+                HeroState={this.state.HeroState}
+                Power={this.state.Power}
+                Color={this.state.Color}
+                HeroId={+this.state.HeroId}
+                ID={+this.state.HeroId}
+                onClick={(heroname: string, superpower: string, heroState: string, Id: number) => this.handleclick(heroname, superpower, heroState, Id)}>
             </HeroEdit>
 
             <div className={styles.container}>
                 {this.state.heroItems.map((i: IResponseHeroItem) => {
                     return <HeroLine car={i}
-                        handleDelete={(Id: string) => this.handleDelete(Id)}
-                        handleChange={(Id: string) => this.handleChange(Id)} >
+                        handleDelete={(Id: number) => this.handleDelete(Id)}
+                        handleChange={(Id: number) => this.handleChange(Id)}>
                     </HeroLine>;
-                })}
-
-                {this.state.heroItems.map((item: IResponseHeroItem, idx:number) => {
-                    return (
-                        <tr key={idx}>
-                            <td>{item.Title}</td>
-                            <td>{item.Color}</td>
-                            <td>{item.Power}</td>
-                            <td>{item.HeroId}</td>
-                        </tr>
-                    );
                 })}
             </div>
         </div>
@@ -151,7 +167,8 @@ export default class HeroApp extends React.Component<IHeroAppProps, IIPnPjsExamp
       // use map to convert IResponseItem[] into our internal object IFile[]
       const items: IResponseHeroItem[] = response.map((item: IResponseHeroItem) => {
         return {
-          HeroId: item.HeroId,
+          ID: item.ID,
+          HeroId: item.ID,
           Title: item.Title || "Unknown",
           Color: item.Color,
           Power: item.Power

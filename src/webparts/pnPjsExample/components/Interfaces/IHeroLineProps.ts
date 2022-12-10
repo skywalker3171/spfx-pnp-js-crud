@@ -1,8 +1,8 @@
-import { IResponseHeroItem } from "./interfaces";
+import { IResponseHeroItem } from "../interfaces";
 
 export interface IHeroLineProps {
-  handleDelete: (Id : string)=> void;
-  handleChange: (Id : string)=> void;
+  handleDelete: (Id : number)=> void;
+  handleChange: (Id : number)=> void;
 
   // Title: string;
   // Power: string;
