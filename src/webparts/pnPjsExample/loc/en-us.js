@@ -1,8 +1,8 @@
 define([], function() {
   return {
-    "PropertyPaneDescription": "Description",
+    "PropertyPaneDescription": "The Description",
     "BasicGroupName": "Group Name",
-    "DescriptionFieldLabel": "Description Field",
+    "DescriptionFieldLabel": "The listname Field",
     "AppLocalEnvironmentSharePoint": "The app is running on your local environment as SharePoint web part",
     "AppLocalEnvironmentTeams": "The app is running on your local environment as Microsoft Teams app",
     "AppLocalEnvironmentOffice": "The app is running on your local environment in office.com",

@@ -1,10 +1,7 @@
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
 import { Version } from '@microsoft/sp-core-library';
-import {
-  IPropertyPaneConfiguration,
-  PropertyPaneTextField
-} from '@microsoft/sp-property-pane';
+import { IPropertyPaneConfiguration, PropertyPaneTextField } from '@microsoft/sp-property-pane';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import { IReadonlyTheme } from '@microsoft/sp-component-base';
 
@@ -16,7 +13,7 @@ import HeroApp from './components/HeroApp';
 import { IHeroAppProps } from './components/Interfaces/IHeroAppProps';
 
 export interface IPnPjsExampleWebPartProps {
-  description: string;
+  listname: string;
 }
 
 export default class PnPjsExampleWebPart extends BaseClientSideWebPart<IPnPjsExampleWebPartProps> {
@@ -43,6 +40,7 @@ export default class PnPjsExampleWebPart extends BaseClientSideWebPart<IPnPjsExa
         Power: null,
         Color: null,
         HeroState: null,
+        Listname: this.properties.listname,
         Id: null
       }
     );
@@ -131,7 +129,7 @@ public async onInit(): Promise<void> {
             {
               groupName: strings.BasicGroupName,
               groupFields: [
-                PropertyPaneTextField('description', {
+                PropertyPaneTextField('listname', {
                   label: strings.DescriptionFieldLabel
                 })
               ]

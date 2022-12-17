@@ -9,7 +9,6 @@ export interface IWTFState {
       Power: string,
       Color: string,
       HeroState: string,
-      HeroId: string,    
       Id: number
   }
 
@@ -25,7 +24,6 @@ class HeroEdit extends React.Component<IHeroEditProps, IWTFState> {
       Title: props.Title,
       Power: props.Power,
       HeroState: props.HeroState,
-      HeroId: props.ID.toString(),
       Color: props.Color,
       Id: props.ID
     };
@@ -45,15 +43,15 @@ class HeroEdit extends React.Component<IHeroEditProps, IWTFState> {
     this.setState({ Power: event.target.value });
   }
 
-  handleChangeColor(event: any) : void{
-    this.setState({ Color: event.target.value });
-  }
+   handleChangeColor(event: any) : void{
+     this.setState({ Color: event.target.value });
+   }
 
   componentWillReceiveProps(nextProps: IHeroEditProps) {
     // You don't have to do this check first, but it can help prevent an unneeded render
     this.setState({ 
         HeroState: nextProps.HeroState,
-        Id: nextProps.HeroId,
+        Id: nextProps.ID,
         Title: nextProps.Title, 
         Power: nextProps.Power,
         Color: nextProps.Color});
@@ -61,18 +59,14 @@ class HeroEdit extends React.Component<IHeroEditProps, IWTFState> {
 
   render() {
     return (    
-      <div className={styles.container}>
+      <div className={styles.container2}>
         <div className={`ms-Grid-row ${styles.row}`}>
-          <div className='ms-Grid-col ms-u-sm1 block'>
-            <label>Name </label>
-            </div>
-            <div className='ms-Grid-col ms-u-sm3 block'>
+          <div className='ms-Grid-col ms-u-sm4 block'>
+            Name <br />
             <input type="text" placeholder="Superhero" name="heroname" value={this.state.Title} onChange={this.handleChangeHero} />
           </div>
-          <div className='ms-Grid-col ms-u-sm1 block'>
-            <label>Power</label>
-            </div>
-            <div className='ms-Grid-col ms-u-sm3 block'>
+          <div className='ms-Grid-col ms-u-sm4 block'>
+            Power<br />
             <input type="text" placeholder="Superpower" name="superpower" value={this.state.Power} onChange={this.handleChangePower} />
           </div>
           <div className='ms-Grid-col ms-u-sm2 block'>
@@ -86,24 +80,16 @@ class HeroEdit extends React.Component<IHeroEditProps, IWTFState> {
         </div>
 
         <div className={`ms-Grid-row ${styles.row}`}>
-          <div className='ms-Grid-col ms-u-sm1 block'>
-            <label>
-              Color
-            </label>
-            </div>
-            <div className='ms-Grid-col ms-u-sm3 block'>
+          <div className='ms-Grid-col ms-u-sm4 block'>
+            Color<br />
             <label>
               <input type="text" placeholder="Color" name="Color" value={this.state.Color} onChange={this.handleChangeColor} />
             </label>
           </div>
-          <div className='ms-Grid-col ms-u-sm1 block'>
-            <label>
-              ID
-            </label>
-          </div>
           <div className='ms-Grid-col ms-u-sm3 block'>
-              <input type="text" placeholder="Id" name="Id" value={this.state.Id} />
-          </div>
+            <br />
+            <label>ID: {this.state.Id} Mode: {this.state.HeroState}</label>
+           </div>
           
         </div>
       </div>

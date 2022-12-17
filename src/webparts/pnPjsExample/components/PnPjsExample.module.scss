@@ -10,8 +10,6 @@
   }
 }
 
-
-
 .welcome {
   text-align: center;
 }
@@ -41,6 +39,13 @@
     margin: 0px auto;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
     // background-color: cadetblue;
+  }
+
+  .container2 {
+    max-width: 700px;
+    margin: 0px auto;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+    background-color: rgb(43, 49, 58);
   }
 
   .row {
@@ -110,7 +115,7 @@
     text-align: center;
     cursor: pointer;
     display: inline-block;
-    padding: 0 16px;
+    padding: 0 5px;
 
     .label {
       font-weight: $ms-font-weight-semibold;

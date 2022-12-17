@@ -1,5 +1,5 @@
 export interface IPnPjsExampleProps {
-  description: string;
+  listname: string;
   isDarkTheme: boolean;
   environmentMessage: string;
   hasTeamsContext: boolean;

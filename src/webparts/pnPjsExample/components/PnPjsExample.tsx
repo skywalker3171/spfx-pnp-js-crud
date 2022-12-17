@@ -3,7 +3,7 @@ import styles from './PnPjsExample.module.scss';
 import { IPnPjsExampleProps } from './Interfaces/IPnPjsExampleProps';
 
 // import interfaces
-import { IFile, IResponseHeroItem, IResponseItem } from "./interfaces";
+import { IFile, IResponseHeroItem, IResponseItem } from "./Interfaces/interfaces";
 
 import { Caching, ICachingProps  } from "@pnp/queryable";
 import { getSP } from "../pnpjsConfig";
@@ -14,7 +14,7 @@ import { IItemAddResult } from "@pnp/sp/items";
 import { Label, PrimaryButton } from '@microsoft/office-ui-fabric-react-bundle';
 
 export interface IAsyncAwaitPnPJsProps {
-  description: string;
+  Listname: string;
 }
 
 export interface IIPnPjsExampleState {
@@ -76,7 +76,7 @@ export default class PnPjsExample extends React.Component<IPnPjsExampleProps, II
                 <td>{item.Title}</td>
                 <td>{item.Color}</td>
                 <td>{item.Power}</td>
-                <td>{item.HeroId}</td>
+                <td>{item.ID}</td>
               </tr>
             );
           })}         
@@ -143,9 +143,9 @@ export default class PnPjsExample extends React.Component<IPnPjsExampleProps, II
       // use map to convert IResponseItem[] into our internal object IFile[]
       const items: IResponseHeroItem[] = response.map((item: IResponseHeroItem) => {
         return {
-          ID: item.HeroId,
-          HeroId: item.HeroId,
-          Id: item.HeroId,
+          ID: item.ID,
+          HeroId: item.ID,
+          Id: item.ID,
           Title: item.Title || "Unknown",
           Color: item.Color,
           Power: item.Power

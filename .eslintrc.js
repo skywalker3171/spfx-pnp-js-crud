@@ -18,7 +18,8 @@ module.exports = {
         '@rushstack/hoist-jest-mock': 1,
         // Require regular expressions to be constructed from string constants rather than dynamically building strings at runtime. https://www.npmjs.com/package/@rushstack/eslint-plugin-security
         '@rushstack/security/no-unsafe-regexp': 1,
-        // STANDARDIZED BY:   @typescript-eslint\eslint-plugin\dist\configs\recommended.json
+        "@typescript-eslint/no-explicit-any": "off",
+         // STANDARDIZED BY:   @typescript-eslint\eslint-plugin\dist\configs\recommended.json
         '@typescript-eslint/adjacent-overload-signatures': 1,
         // STANDARDIZED BY:   @typescript-eslint\eslint-plugin\dist\configs\recommended.json
         //
@@ -60,7 +61,7 @@ module.exports = {
         //
         // STANDARDIZED BY:   @typescript-eslint\eslint-plugin\dist\configs\recommended.json
         '@typescript-eslint/explicit-function-return-type': [
-          1,
+          0,
           {
             'allowExpressions': true,
             'allowTypedFunctionExpressions': true,
@@ -79,7 +80,6 @@ module.exports = {
         //                    This rule should be suppressed only in very special cases such as JSON.stringify()
         //                    where the type really can be anything.  Even if the type is flexible, another type
         //                    may be more appropriate such as "unknown", "{}", or "Record<k,V>".
-        '@typescript-eslint/no-explicit-any': 1,
         // RATIONALE:         The #1 rule of promises is that every promise chain must be terminated by a catch()
         //                    handler.  Thus wherever a Promise arises, the code must either append a catch handler,
         //                    or else return the object to a caller (who assumes this responsibility).  Unterminated
@@ -168,7 +168,7 @@ module.exports = {
           }
         ],
         // RATIONALE:         Catches code that is likely to be incorrect
-        'eqeqeq': 1,
+        'eqeqeq': 0,
         // STANDARDIZED BY:   eslint\conf\eslint-recommended.js
         'for-direction': 1,
         // RATIONALE:         Catches a common coding mistake.

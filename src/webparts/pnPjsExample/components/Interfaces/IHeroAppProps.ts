@@ -4,4 +4,5 @@ export interface IHeroAppProps {
   Color: string;
   HeroState: string;
   Id: string;
+  Listname: string;
 }

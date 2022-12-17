@@ -28,10 +28,10 @@ class HeroLine extends React.Component<IHeroLineProps, any> {
             <div className='ms-Grid-col ms-u-sm3 block'>
             <label className="md-1">{this.props.car.Title}</label>
             </div>
-            <div className='ms-Grid-col ms-u-sm1 block'>
+            <div className='ms-Grid-col ms-u-sm2 block'>
             <label className="md-1">{this.props.car.Color}</label>
             </div>  
-            <div className='ms-Grid-col ms-u-sm3 block'>
+            <div className='ms-Grid-col ms-u-sm2 block'>
             <label className="md-1">{this.props.car.Power}</label>
             </div>           
             <div className='ms-Grid-col ms-u-sm2 block'>
