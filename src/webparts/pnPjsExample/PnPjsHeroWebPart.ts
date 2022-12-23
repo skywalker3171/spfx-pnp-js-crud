@@ -22,17 +22,6 @@ export default class PnPjsExampleWebPart extends BaseClientSideWebPart<IPnPjsExa
   // private _environmentMessage: string = '';
 
   public render(): void {
-    // const element: React.ReactElement<IPnPjsExampleProps> = React.createElement(
-    //   PnPjsExample,
-    //   {
-    //     description: this.properties.description,
-    //     isDarkTheme: this._isDarkTheme,
-    //     environmentMessage: this._environmentMessage,
-    //     hasTeamsContext: !!this.context.sdks.microsoftTeams,
-    //     userDisplayName: this.context.pageContext.user.displayName
-    //   }
-    // );
-
     const heroelement: React.ReactElement<IHeroAppProps> = React.createElement(
       HeroApp,
       {
@@ -46,7 +35,6 @@ export default class PnPjsExampleWebPart extends BaseClientSideWebPart<IPnPjsExa
     );
 
     ReactDom.render([heroelement], this.domElement);
-    //ReactDom.render(element, this.domElement);
   }
 
   public handleclick(heroname: string, superpower: string, heroState: string, Id: number) : void {
@@ -66,31 +54,7 @@ public async onInit(): Promise<void> {
   getSP(this.context);
 }
 
-  // private _getEnvironmentMessage(): Promise<string> {
-  //   if (!!this.context.sdks.microsoftTeams) { // running in Teams, office.com or Outlook
-  //     return this.context.sdks.microsoftTeams.teamsJs.app.getContext()
-  //       .then(context => {
-  //         let environmentMessage: string = '';
-  //         switch (context.app.host.name) {
-  //           case 'Office': // running in Office
-  //             environmentMessage = this.context.isServedFromLocalhost ? strings.AppLocalEnvironmentOffice : strings.AppOfficeEnvironment;
-  //             break;
-  //           case 'Outlook': // running in Outlook
-  //             environmentMessage = this.context.isServedFromLocalhost ? strings.AppLocalEnvironmentOutlook : strings.AppOutlookEnvironment;
-  //             break;
-  //           case 'Teams': // running in Teams
-  //             environmentMessage = this.context.isServedFromLocalhost ? strings.AppLocalEnvironmentTeams : strings.AppTeamsTabEnvironment;
-  //             break;
-  //           default:
-  //             throw new Error('Unknown host');
-  //         }
-
-  //         return environmentMessage;
-  //       });
-  //   }
-
-  //   return Promise.resolve(this.context.isServedFromLocalhost ? strings.AppLocalEnvironmentSharePoint : strings.AppSharePointEnvironment);
-  // }
+  
 
   protected onThemeChanged(currentTheme: IReadonlyTheme | undefined): void {
     if (!currentTheme) {

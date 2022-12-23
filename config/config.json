@@ -5,8 +5,8 @@
     "pn-pjs-example-web-part": {
       "components": [
         {
-          "entrypoint": "./lib/webparts/pnPjsExample/PnPjsExampleWebPart.js",
-          "manifest": "./src/webparts/pnPjsExample/PnPjsExampleWebPart.manifest.json"
+          "entrypoint": "./lib/webparts/pnPjsExample/PnPjsHeroWebPart.js",
+          "manifest": "./src/webparts/pnPjsExample/PnPjsHeroWebPart.manifest.json"
         }
       ]
     }

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { IHeroLineProps } from './Interfaces/IHeroLineProps'
-import styles from './PnPjsExample.module.scss';
+import styles from './PnPjsHero.module.scss';
 
 class HeroLine extends React.Component<IHeroLineProps, any> {
     handleDelete: any;

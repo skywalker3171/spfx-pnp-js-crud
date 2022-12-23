@@ -1,8 +1,6 @@
 import * as React from 'react';
-//import { SPFI } from "@pnp/sp";
 import { IHeroEditProps } from './Interfaces/IHeroEditProps';
-import styles from './PnPjsExample.module.scss';
-//import { IItemAddResult } from '@pnp/sp/items/types';
+import styles from './PnPjsHero.module.scss';
 
 export interface IWTFState {
       Title: string,

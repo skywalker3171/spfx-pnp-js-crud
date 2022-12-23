@@ -1,12 +1,12 @@
 import * as React from 'react';
-import styles from './PnPjsExample.module.scss';
+import styles from './PnPjsHero.module.scss';
 
-import { SPFI  } from '@pnp/sp'; //t5
+import { SPFI  } from '@pnp/sp'; 
 import { getSP } from '../pnpjsConfig';
-//import { Caching, ICachingProps  } from "@pnp/queryable";
 import { IHeroAppProps } from './Interfaces/IHeroAppProps';
-import { IResponseHeroItem } from './Interfaces/interfaces';
+import { IResponseHeroItem } from './Interfaces/IResponseHero';
 import { Logger, LogLevel } from '@pnp/logging';
+//import { Caching, ICachingProps  } from "@pnp/queryable";
 import { IItemAddResult, IItemUpdateResult } from '@pnp/sp/items/types';
 
 import HeroLine from './HeroLine';
@@ -131,12 +131,13 @@ export default class HeroApp extends React.Component<IHeroAppProps, IIHeroAppSta
         </div>
     );
   }
-
  
 
   private _readAllHeroItems = async (): Promise<void> => {
     try {
       //const spCache = spfi(this._sp).using(Caching(cacheProps));
+      //this._sp.using(Caching(cacheProps));
+
       console.log('started _readAllHeroItems');
       const response: IResponseHeroItem[] = await this._sp.web.lists
         .getByTitle("Demolist")

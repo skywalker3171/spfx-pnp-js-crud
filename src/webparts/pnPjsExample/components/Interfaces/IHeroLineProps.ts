@@ -1,4 +1,4 @@
-import { IResponseHeroItem } from "./interfaces";
+import { IResponseHeroItem } from "./IResponseHero";
 
 export interface IHeroLineProps {
   handleDelete: (Id : number)=> void;
