@@ -142,7 +142,7 @@ export default class HeroApp extends React.Component<IHeroAppProps, IIHeroAppSta
       const response: IResponseHeroItem[] = await this._sp.web.lists
         .getByTitle("Demolist")
         .items
-        .select("Id", "Title", "Color", "Power", "HeroID")();
+        .select("Id", "Title", "Color", "Power")();
 
       // use map to convert IResponseItem[] into our internal object IFile[]
       const items: IResponseHeroItem[] = response.map((item: IResponseHeroItem) => {
@@ -193,7 +193,7 @@ export default class HeroApp extends React.Component<IHeroAppProps, IIHeroAppSta
       });
 
       console.log(iar);
-
+      await this._readAllHeroItems();
     } catch (err) {
       Logger.write(`${this.LOG_SOURCE} (_updateTitles) - ${JSON.stringify(err)} - `, LogLevel.Error);
     }
@@ -203,7 +203,7 @@ export default class HeroApp extends React.Component<IHeroAppProps, IIHeroAppSta
     try {
      
       await this._sp.web.lists.getByTitle("Demolist").items.getById(ID).delete();
-
+      await this._readAllHeroItems();
     } catch (err) {
       Logger.write(`${this.LOG_SOURCE} (_updateTitles) - ${JSON.stringify(err)} - `, LogLevel.Error);
     }
