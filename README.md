@@ -16,5 +16,6 @@ For each of the three components the Props are defined in a seperate interface f
 
 IResponseHero.ts contains the structure for an item that is returned from a SharePoint list, Demolist. Please note that the interfaces are plain Typescript and the components are TSX. A TSX file is a TypeScript (.TS) file written using JSX React syntax.
 
+![image](https://user-images.githubusercontent.com/23434451/218325264-9f89026d-eeb0-43da-ac36-678ab01f88f9.png)
 
 
