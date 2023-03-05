@@ -34,7 +34,6 @@ export interface IPnPjsExampleWebPartProps {
   listname: string;
 }
 
-
 export default class PnPjsExampleWebPart extends BaseClientSideWebPart<IPnPjsExampleWebPartProps> {
 
   private _isDarkTheme = false;
@@ -129,4 +128,3 @@ export default class PnPjsExampleWebPart extends BaseClientSideWebPart<IPnPjsExa
     };
   }
 }
-
