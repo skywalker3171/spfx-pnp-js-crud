@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {  useRef, FC } from 'react';
+import {  useState, useRef, FC } from 'react';
 import { IHeroEditProps } from './Interfaces/IHeroEditProps';
 //import styles from './PnPjsHero.module.scss';
 //import styles from './fluentUi9Demo.module.scss';
@@ -19,11 +19,11 @@ export interface IWTFState {
   }
 
 const HeroEdit: FC<IHeroEditProps & IWTFState> = props => {
-  //const [Title, setTitle] = useState(props.Title);
-  //const [Power, setPower] = useState(props.Power);
+  const [Title, setTitle] = useState(props.Title);
+  const [Power, setPower] = useState(props.Power);
   //const [HeroState, setHeroState] = useState(props.HeroState);
   //const HeroState = props.HeroState;
-  //const [Color, setColor] = useState(props.Color);
+  const [Color, setColor] = useState(props.Color);
   //const [Id, setId] = useState(props.ID);
   const stackTokens = useRef({
     childrenGap: 50
@@ -47,7 +47,7 @@ const HeroEdit: FC<IHeroEditProps & IWTFState> = props => {
     }
   });
   //const onClick = props.onClick;
-  /* const handleChangeHero = (value: string) => {
+  const handleChangeHero = (value: string) => {
     setTitle(value);
   };
   const handleChangePower = (value: string) => {
@@ -55,21 +55,21 @@ const HeroEdit: FC<IHeroEditProps & IWTFState> = props => {
   };
   const handleChangeColor = (value: string) => {
     setColor(value);
-  }; */
+  };
   
   return <div style={{
     paddingLeft: 20
   }}>
       <Stack horizontal tokens={stackTokens.current} styles={stackStyles.current}>
       <Stack {...columnProps.current}>
-        {/* <TextField label="Name" name="heroname" value={Title} onChange={(e) => handleChangeHero((e.target as HTMLInputElement).value)}  />
-        <TextField label="Color" name="Color" value={Color} onChange={(e) => handleChangeColor((e.target as HTMLInputElement).value)} /> */}
+        <TextField label="Name" name="heroname" value={Title} onChange={(e) => handleChangeHero((e.target as HTMLInputElement).value)}  />
+        <TextField label="Color" name="Color" value={Color} onChange={(e) => handleChangeColor((e.target as HTMLInputElement).value)} />
         <Button style={{
           padding: 10
         }} appearance="primary" /* onClick={() => onClick(Title, Power, Color, HeroState, props.Id)} */>Save</Button>     
       </Stack>
       <Stack {...columnProps.current}>
-        {/* <TextField label="Power" name="superpower" value={Power} onChange={(e) => handleChangePower((e.target as HTMLInputElement).value)} /> */}
+        <TextField label="Power" name="superpower" value={Power} onChange={(e) => handleChangePower((e.target as HTMLInputElement).value)} />
         <TextField label="ID" name="ID" value={props.Id.toString()} />
       </Stack>
     </Stack>
