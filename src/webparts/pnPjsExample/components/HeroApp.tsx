@@ -8,7 +8,7 @@ import { IHeroAppProps } from './Interfaces/IHeroAppProps';
 import { IResponseHeroItem } from './Interfaces/IResponseHero';
 //import { Logger, LogLevel } from '@pnp/logging';
 //import { Caching, ICachingProps  } from "@pnp/queryable";
-//import { IItemAddResult, IItemUpdateResult } from '@pnp/sp/items/types';
+import { IItemAddResult, IItemUpdateResult } from '@pnp/sp/items/types';
 
 //import HeroLine from './HeroLine';
 import HeroEdit from './HeroEdit';
@@ -55,51 +55,38 @@ export const HeroApp: FC<IHeroAppProps> = props => {
     
   ];
 
-  const [heroItems, setHeroItems] = useState(Array(1).fill({ Title: "Flash", Power: "Speed", Color: "Blue"}));
-  //const [count, setCount] = useState(0);
-
-  /* useEffect(() => {
-    () => {
-      console.log(`You clicked ${count} times`);
-      //setHeroItems(Array(1).fill({ Title: "Flash 2", Power: "Speed 2", Color: "Blue 2"}));
-      //_readAllHeroItems();
-    };
-  },[count]); */
-
   useEffect(() => {
-    /* setTimeout(() => {
-      console.log(`You clicked ${count} times`);
-      _readAllHeroItems();
-    }, 3000); */
-    //console.log(`You clicked ${count} times`);
-      _readAllHeroItems();
-  });
-  //setHeroItems(Array(1).fill({ Title: "Flash", Power: "Speed", Color: "Blue"}));
-  //const [heroState, setHeroState] = useState('');
+    console.log(`Using Effect`);
+    _readAllHeroItems();
+}, []);
+
+  const [heroItems, setHeroItems] = useState(Array(1).fill({ Title: "Flash", Power: "Speed", Color: "Blue"}));
+  const [heroState, setHeroState] = useState('');
   //const [items, setItems] = useState([]);
-  //const [errors, setErrors] = useState([]);
-  //const [stepNumber, setStepNumber] = useState(0);
-  //const [Title, setTitle] = useState(null);
-  //const [Power, setPower] = useState(null);
-  //const [Color, setColor] = useState(null);
-  //const [ID, setID] = useState(null);
+  const [Title, setTitle] = useState(null);
+  const [Power, setPower] = useState(null);
+  const [Color, setColor] = useState(null);
+  const [ID, setID] = useState(null);
   const _sp = getSP();
 
   
   
-  /* const handleclick = (heroname: string, superpower: string, color: string, heroState: string, Id: number) => {
+  const handleclick = (heroname: string, superpower: string, color: string, heroState: string, Id: number) => {
     
     if (heroState == 'Add') {
-     /setHeroItems(heroItems.concat({
+     setHeroItems(heroItems.concat({
         Title: heroname,
         Power: superpower,
         Color: color,
         ID: 0
       })); 
-      //setTitle('');
-      //setPower('');  
-
+      
       _createItem(heroname, superpower, color, Id);
+      
+      setID(0);
+      setTitle('');
+      setPower('');  
+      setColor('');
     }
     else {
       setHeroItems(heroItems.map((i: IResponseHeroItem) => (i.ID == Id ? Object.assign({}, i, {
@@ -108,28 +95,34 @@ export const HeroApp: FC<IHeroAppProps> = props => {
         Color: color,
         ID: Id
       }) : i))); 
-      //setTitle('');
-      //setPower('');  
-      //setHeroState('Add');
+      
       _updateTitle(heroname, superpower, color, Id);
+      
+      setID(0);
+      setTitle('');
+      setPower('');  
+      setColor('');
+      setHeroState('Add');
     }
     
     return {};
-  } */
+  }
 
   const handleDelete = (Id: number) => {
+    console.log('handleDelete itmes: '+ heroItems.length);
     setHeroItems(heroItems.filter((obj) => {return obj.ID !== Id;}));
     _deleteTitle(Id);
   }
 
   const handleChange = (Id: number) => {  
-    setHeroItems(heroItems.filter((obj) => {return obj.ID == Id;})[0].Title);
-    //setPower(heroItems.filter((obj) => {return obj.ID == Id;})[0].Power);
-    //setColor(heroItems.filter((obj) => {return obj.ID == Id;})[0].Color);
-    //setID(heroItems.filter((obj) => {return obj.ID == Id;})[0].Id);
+    console.log('handleChange itmes: '+ heroItems.length);
+    setTitle(heroItems.filter((obj) => {return obj.ID == Id;})[0].Title);
+    setPower(heroItems.filter((obj) => {return obj.ID == Id;})[0].Power);
+    setColor(heroItems.filter((obj) => {return obj.ID == Id;})[0].Color);
+    setID(Id);
+    setHeroState('Change');
   }
-  /* (heroname: string, superpower: string, color: string, heroState: string, Id: number) => handleclick(heroname, superpower, color, heroState, Id) */
-
+  
     const _readAllHeroItems = async (): Promise<void> => {
     try {
       //const spCache = spfi(_sp).using(Caching(cacheProps));
@@ -154,15 +147,14 @@ export const HeroApp: FC<IHeroAppProps> = props => {
 
       // Add the items to the state
       setHeroItems(items);
-      console.log(items);
       console.log('state set');
-      //console.log('state itmes: '+ heroItems.length);
+      console.log('state itmes: '+ heroItems.length);
     } catch (err) {
       //Logger.write(`${LOG_SOURCE} (_readAllFilesSize) - ${JSON.stringify(err)} - `, LogLevel.Error);
     }
   }
 
-  /* const _createItem = async (Title: string, Power: string, Color: string, HeroId: number): Promise<void> => {
+  const _createItem = async (Title: string, Power: string, Color: string, HeroId: number): Promise<void> => {
     try {
       const iar: IItemAddResult = await _sp.web.lists.getByTitle("Demolist").items.add({
         Title: Title,
@@ -195,7 +187,7 @@ export const HeroApp: FC<IHeroAppProps> = props => {
     } catch (err) {
       //Logger.write(`${LOG_SOURCE} (_updateTitles) - ${JSON.stringify(err)} - `, LogLevel.Error);
     }
-  } */
+  }
 
   const _deleteTitle = async (ID: number): Promise<void> => {
     try {
@@ -210,13 +202,13 @@ export const HeroApp: FC<IHeroAppProps> = props => {
   return (
     <div>  
       {/* <label>W T F 2</label>   */}        
-        <HeroEdit Title={props.Title}
-            HeroState={props.HeroState}
-            Power={props.Power}
-            Color={props.Color}
-            ID={+props.Id}
-            Id={+props.Id}
-            onClick={() => void 0}>
+        <HeroEdit Title={Title}
+            HeroState={heroState}
+            Power={Power}
+            Color={Color}
+            ID={+ID}
+            Id={+ID}
+            onClick={handleclick}>
         </HeroEdit> 
       
       <DetailsList
@@ -231,11 +223,6 @@ export const HeroApp: FC<IHeroAppProps> = props => {
         checkButtonAriaLabel="select row"
         //onItemInvoked={_onItemInvoked}
       /> 
-
-      {/* <p>You clicked {count} times</p>
-      <button onClick={() => {setCount(count + 1);console.log(`render-count ${count} times`);}}>
-        Click me
-      </button> */}
     </div>
 );
 }

@@ -53,16 +53,6 @@ export default class PnPjsExampleWebPart extends BaseClientSideWebPart<IPnPjsExa
   }
 
   public render(): void {
-    
-    /* let heroAppProps: IHeroAppProps = {
-      Title: '',
-      Power: '',
-      Color: '',
-      HeroState: null,
-      Id: '1',
-      Listname: ''};  */
-    
-      //const counterElement = <Counter/>
       
       const heroelement =
         <HeroApp    
@@ -72,16 +62,6 @@ export default class PnPjsExampleWebPart extends BaseClientSideWebPart<IPnPjsExa
           HeroState= {null}
           Listname= {this.properties.listname}
           Id= '0'/>
-
-    /* const fluentElement2: React.ReactElement<FluentProviderProps> = React.createElement(
-      FluentProvider,
-      {
-        theme : this._appMode === AppMode.Teams || this._appMode === AppMode.TeamsLocal ? 
-                this._isDarkTheme ? teamsDarkTheme : teamsLightTheme : 
-                this._isDarkTheme ? webDarkTheme : this._theme
-      },
-      counterElement
-    );      */
 
     const fluentElement3: React.ReactElement<FluentProviderProps> = React.createElement(
       FluentProvider,

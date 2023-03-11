@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {  useState, useRef, FC } from 'react';
+import {  useState, useEffect, useRef, FC } from 'react';
 import { IHeroEditProps } from './Interfaces/IHeroEditProps';
 //import styles from './PnPjsHero.module.scss';
 //import styles from './fluentUi9Demo.module.scss';
@@ -7,7 +7,8 @@ import { IHeroEditProps } from './Interfaces/IHeroEditProps';
 import { TextField } from '@fluentui/react/lib/TextField';
 import { Stack } from '@fluentui/react/lib/Stack';
 
-//import { Button } from '@fluentui/react-components';
+import { Button } from '@fluentui/react-components';
+import { Label } from 'office-ui-fabric-react';
 //import { Label } from 'office-ui-fabric-react';
 
 export interface IWTFState {
@@ -21,16 +22,20 @@ export interface IWTFState {
 const HeroEdit: FC<IHeroEditProps & IWTFState> = props => {
   const [Title, setTitle] = useState(props.Title);
   const [Power, setPower] = useState(props.Power);
-  //const [HeroState, setHeroState] = useState(props.HeroState);
-  //const HeroState = props.HeroState;
   const [Color, setColor] = useState(props.Color);
-  //const [Id, setId] = useState(props.ID);
+
+  useEffect(() => {
+    console.log(`Using Effect in HeroEdit with ID: ` + props.ID.toString());
+    setTitle(props.Title);
+    setPower(props.Power);
+    setColor(props.Color);
+}, [props]);
+
+  
   const stackTokens = useRef({
     childrenGap: 50
   });
-  /* const iconProps = useRef({
-    iconName: 'Calendar'
-  }); */
+
   const stackStyles = useRef({
     root: {
       width: 650
@@ -46,7 +51,7 @@ const HeroEdit: FC<IHeroEditProps & IWTFState> = props => {
       }
     }
   });
-  //const onClick = props.onClick;
+  
   const handleChangeHero = (value: string) => {
     setTitle(value);
   };
@@ -64,13 +69,14 @@ const HeroEdit: FC<IHeroEditProps & IWTFState> = props => {
       <Stack {...columnProps.current}>
         <TextField label="Name" name="heroname" value={Title} onChange={(e) => handleChangeHero((e.target as HTMLInputElement).value)}  />
         <TextField label="Color" name="Color" value={Color} onChange={(e) => handleChangeColor((e.target as HTMLInputElement).value)} />
-        {/* <Button style={{
+        <Button style={{
           padding: 10
-        }} appearance="primary" onClick={() => props.onClick(Title, Power, Color, props.HeroState, props.Id)}>Save</Button>    */}
+        }} appearance="primary" onClick={() => props.onClick(Title, Power, Color, props.HeroState, props.Id)}>Save</Button> 
       </Stack>
       <Stack {...columnProps.current}>
         <TextField label="Power" name="superpower" value={Power} onChange={(e) => handleChangePower((e.target as HTMLInputElement).value)} />
-        <TextField label="ID" name="ID" value={props.Id.toString()} />
+        <TextField readOnly={true} label="ID" name="ID" value={props.Id.toString()} />
+        <Label>State: {props.HeroState.toString()} </Label>
       </Stack>
     </Stack>
       </div>);
