@@ -1,9 +1,9 @@
 import * as React from 'react';
-import {  FC } from 'react';
+import {  useState, useEffect, FC } from 'react';
 //import styles from './PnPjsHero.module.scss';
 
 import { SPFI  } from '@pnp/sp'; 
-//import { getSP } from '../pnpjsConfig';
+import { getSP } from '../pnpjsConfig';
 import { IHeroAppProps } from './Interfaces/IHeroAppProps';
 import { IResponseHeroItem } from './Interfaces/IResponseHero';
 //import { Logger, LogLevel } from '@pnp/logging';
@@ -12,9 +12,9 @@ import { IResponseHeroItem } from './Interfaces/IResponseHero';
 
 //import HeroLine from './HeroLine';
 import HeroEdit from './HeroEdit';
-/*
-import { DetailsList, DetailsListLayoutMode} from '@fluentui/react/lib/DetailsList'; //, Selection, IColumn 
-import { Button } from '@fluentui/react-components'; */
+
+import { DetailsList } from '@fluentui/react/lib/DetailsList'; //, Selection, IColumn //DetailsListLayoutMode
+import { Button } from '@fluentui/react-components'; 
 export interface IReactCrudWebPartProps {
   listName: string;
 }
@@ -35,11 +35,12 @@ export interface IIHeroAppState {
 }
 
 export const HeroApp: FC<IHeroAppProps> = props => {
+//export const HeroApp = (props : IHeroAppProps) => {
   //LOG_SOURCE: any;
   _sp: SPFI;
   //private myiar: IItemAddResult;
 
-  /* const _columns = [
+  const _columns = [
     { key: 'column1', name: 'Title', fieldName: 'Title', minWidth: 100, maxWidth: 200, isResizable: true },
     { key: 'column2', name: 'Power', fieldName: 'Power', minWidth: 100, maxWidth: 200, isResizable: true },
     { key: 'column3', name: 'Color', fieldName: 'Color', minWidth: 100, maxWidth: 200, isResizable: true },
@@ -52,9 +53,28 @@ export const HeroApp: FC<IHeroAppProps> = props => {
         <Button appearance="primary" onClick={() => handleChange(item.ID)}>Change</Button>
     ),},
     
-  ]; */
+  ];
 
-  //const [heroItems, setHeroItems] = useState(Array(1).fill({ Title: "Flash", Power: "Speed", Color: "Blue"}));
+  const [heroItems, setHeroItems] = useState(Array(1).fill({ Title: "Flash", Power: "Speed", Color: "Blue"}));
+  //const [count, setCount] = useState(0);
+
+  /* useEffect(() => {
+    () => {
+      console.log(`You clicked ${count} times`);
+      //setHeroItems(Array(1).fill({ Title: "Flash 2", Power: "Speed 2", Color: "Blue 2"}));
+      //_readAllHeroItems();
+    };
+  },[count]); */
+
+  useEffect(() => {
+    /* setTimeout(() => {
+      console.log(`You clicked ${count} times`);
+      _readAllHeroItems();
+    }, 3000); */
+    //console.log(`You clicked ${count} times`);
+      _readAllHeroItems();
+  });
+  //setHeroItems(Array(1).fill({ Title: "Flash", Power: "Speed", Color: "Blue"}));
   //const [heroState, setHeroState] = useState('');
   //const [items, setItems] = useState([]);
   //const [errors, setErrors] = useState([]);
@@ -63,16 +83,9 @@ export const HeroApp: FC<IHeroAppProps> = props => {
   //const [Power, setPower] = useState(null);
   //const [Color, setColor] = useState(null);
   //const [ID, setID] = useState(null);
-  //const _sp = getSP();
+  const _sp = getSP();
 
-
-  /* public componentDidMount(): void {
-    // read all file sizes from Documents library
-    console.log('started componentDidMount');
-    _readAllHeroItems();
-    console.log('end componentDidMount');
-  }
- */
+  
   
   /* const handleclick = (heroname: string, superpower: string, color: string, heroState: string, Id: number) => {
     
@@ -104,7 +117,7 @@ export const HeroApp: FC<IHeroAppProps> = props => {
     return {};
   } */
 
-  /* const handleDelete = (Id: number) => {
+  const handleDelete = (Id: number) => {
     setHeroItems(heroItems.filter((obj) => {return obj.ID !== Id;}));
     _deleteTitle(Id);
   }
@@ -114,40 +127,10 @@ export const HeroApp: FC<IHeroAppProps> = props => {
     //setPower(heroItems.filter((obj) => {return obj.ID == Id;})[0].Power);
     //setColor(heroItems.filter((obj) => {return obj.ID == Id;})[0].Color);
     //setID(heroItems.filter((obj) => {return obj.ID == Id;})[0].Id);
-  } */
+  }
   /* (heroname: string, superpower: string, color: string, heroState: string, Id: number) => handleclick(heroname, superpower, color, heroState, Id) */
 
-  return (
-        <div>  
-            {/* {<label>W T F</label> */}
-                 
-            <HeroEdit Title={props.Title}
-                HeroState={props.HeroState}
-                Power={props.Power}
-                Color={props.Color}
-                ID={+props.Id}
-                Id={+props.Id}
-                onClick={() => void 0}>
-            </HeroEdit> 
-          
-          {/* <DetailsList
-            items={heroItems}
-            columns={_columns}
-            setKey="set"
-            layoutMode={DetailsListLayoutMode.justified}
-            //selection={_selection}
-            selectionPreservedOnEmptyClick={true}
-            ariaLabelForSelectionColumn="Toggle selection"
-            ariaLabelForSelectAllCheckbox="Toggle selection for all items"
-            checkButtonAriaLabel="select row"
-            //onItemInvoked={_onItemInvoked}
-          />  */}
-        </div>
-    );
-
- 
-
-    /* const _readAllHeroItems = async (): Promise<void> => {
+    const _readAllHeroItems = async (): Promise<void> => {
     try {
       //const spCache = spfi(_sp).using(Caching(cacheProps));
       //_sp.using(Caching(cacheProps));
@@ -171,12 +154,13 @@ export const HeroApp: FC<IHeroAppProps> = props => {
 
       // Add the items to the state
       setHeroItems(items);
+      console.log(items);
       console.log('state set');
-      console.log('state itmes: '+ heroItems.length);
+      //console.log('state itmes: '+ heroItems.length);
     } catch (err) {
       //Logger.write(`${LOG_SOURCE} (_readAllFilesSize) - ${JSON.stringify(err)} - `, LogLevel.Error);
     }
-  } */
+  }
 
   /* const _createItem = async (Title: string, Power: string, Color: string, HeroId: number): Promise<void> => {
     try {
@@ -213,7 +197,7 @@ export const HeroApp: FC<IHeroAppProps> = props => {
     }
   } */
 
-  /* const _deleteTitle = async (ID: number): Promise<void> => {
+  const _deleteTitle = async (ID: number): Promise<void> => {
     try {
      
       await _sp.web.lists.getByTitle("Demolist").items.getById(ID).delete();
@@ -221,7 +205,39 @@ export const HeroApp: FC<IHeroAppProps> = props => {
     } catch (err) {
       //Logger.write(`${LOG_SOURCE} (_updateTitles) - ${JSON.stringify(err)} - `, LogLevel.Error);
     }
-  } */
+  }
+
+  return (
+    <div>  
+      {/* <label>W T F 2</label>   */}        
+        <HeroEdit Title={props.Title}
+            HeroState={props.HeroState}
+            Power={props.Power}
+            Color={props.Color}
+            ID={+props.Id}
+            Id={+props.Id}
+            onClick={() => void 0}>
+        </HeroEdit> 
+      
+      <DetailsList
+        items={heroItems}
+        columns={_columns}
+        setKey="set"
+        /* layoutMode={DetailsListLayoutMode.justified} */
+        //selection={_selection}
+        selectionPreservedOnEmptyClick={true}
+        ariaLabelForSelectionColumn="Toggle selection"
+        ariaLabelForSelectAllCheckbox="Toggle selection for all items"
+        checkButtonAriaLabel="select row"
+        //onItemInvoked={_onItemInvoked}
+      /> 
+
+      {/* <p>You clicked {count} times</p>
+      <button onClick={() => {setCount(count + 1);console.log(`render-count ${count} times`);}}>
+        Click me
+      </button> */}
+    </div>
+);
 }
 
 

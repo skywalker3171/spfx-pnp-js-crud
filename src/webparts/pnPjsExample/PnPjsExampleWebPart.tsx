@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
+//import {  FC } from 'react';
 import { Version } from '@microsoft/sp-core-library';
 import {
   IPropertyPaneConfiguration,
@@ -17,7 +18,8 @@ import { getSP } from './pnpjsConfig';
 //import FluentUi9Demo from './components/FluentUi9Demo';
 
 import { HeroApp } from './components/HeroApp';
-import { IHeroAppProps } from './components/Interfaces/IHeroAppProps';
+//import { Counter } from './components/EffectsDemo';
+//import { IHeroAppProps } from './components/Interfaces/IHeroAppProps';
 
 import { FluentProvider, FluentProviderProps, teamsDarkTheme, teamsLightTheme, webLightTheme, webDarkTheme, Theme } from '@fluentui/react-components';
 
@@ -52,15 +54,34 @@ export default class PnPjsExampleWebPart extends BaseClientSideWebPart<IPnPjsExa
 
   public render(): void {
     
-    let heroAppProps: IHeroAppProps = {
+    /* let heroAppProps: IHeroAppProps = {
       Title: '',
       Power: '',
       Color: '',
       HeroState: null,
       Id: '1',
-      Listname: ''};
+      Listname: ''};  */
     
-    const heroelement = HeroApp(heroAppProps); 
+      //const counterElement = <Counter/>
+      
+      const heroelement =
+        <HeroApp    
+          Title= {'Title'}
+          Power= {null}
+          Color= {null}
+          HeroState= {null}
+          Listname= {this.properties.listname}
+          Id= '0'/>
+
+    /* const fluentElement2: React.ReactElement<FluentProviderProps> = React.createElement(
+      FluentProvider,
+      {
+        theme : this._appMode === AppMode.Teams || this._appMode === AppMode.TeamsLocal ? 
+                this._isDarkTheme ? teamsDarkTheme : teamsLightTheme : 
+                this._isDarkTheme ? webDarkTheme : this._theme
+      },
+      counterElement
+    );      */
 
     const fluentElement3: React.ReactElement<FluentProviderProps> = React.createElement(
       FluentProvider,

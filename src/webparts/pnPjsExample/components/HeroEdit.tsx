@@ -7,7 +7,7 @@ import { IHeroEditProps } from './Interfaces/IHeroEditProps';
 import { TextField } from '@fluentui/react/lib/TextField';
 import { Stack } from '@fluentui/react/lib/Stack';
 
-import { Button } from '@fluentui/react-components';
+//import { Button } from '@fluentui/react-components';
 //import { Label } from 'office-ui-fabric-react';
 
 export interface IWTFState {
@@ -57,23 +57,23 @@ const HeroEdit: FC<IHeroEditProps & IWTFState> = props => {
     setColor(value);
   };
   
-  return <div style={{
+  return (<div style={{
     paddingLeft: 20
   }}>
       <Stack horizontal tokens={stackTokens.current} styles={stackStyles.current}>
       <Stack {...columnProps.current}>
         <TextField label="Name" name="heroname" value={Title} onChange={(e) => handleChangeHero((e.target as HTMLInputElement).value)}  />
         <TextField label="Color" name="Color" value={Color} onChange={(e) => handleChangeColor((e.target as HTMLInputElement).value)} />
-        <Button style={{
+        {/* <Button style={{
           padding: 10
-        }} appearance="primary" /* onClick={() => onClick(Title, Power, Color, HeroState, props.Id)} */>Save</Button>     
+        }} appearance="primary" onClick={() => props.onClick(Title, Power, Color, props.HeroState, props.Id)}>Save</Button>    */}
       </Stack>
       <Stack {...columnProps.current}>
         <TextField label="Power" name="superpower" value={Power} onChange={(e) => handleChangePower((e.target as HTMLInputElement).value)} />
         <TextField label="ID" name="ID" value={props.Id.toString()} />
       </Stack>
     </Stack>
-      </div>;
+      </div>);
 };
 
 export default HeroEdit;
