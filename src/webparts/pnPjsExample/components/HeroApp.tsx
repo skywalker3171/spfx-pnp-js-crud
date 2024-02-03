@@ -71,7 +71,7 @@ export const HeroApp: FC<IHeroAppProps> = props => {
 
   
   
-  const handleclick = (heroname: string, superpower: string, color: string, heroState: string, Id: number) => {
+  const handleclick = async (heroname: string, superpower: string, color: string, heroState: string, Id: number) => {
     
     if (heroState == 'Add') {
      setHeroItems(heroItems.concat({
@@ -81,7 +81,7 @@ export const HeroApp: FC<IHeroAppProps> = props => {
         ID: 0
       })); 
       
-      _createItem(heroname, superpower, color, Id);
+      await _createItem(heroname, superpower, color, Id);
       
       setID(0);
       setTitle('');
@@ -96,7 +96,7 @@ export const HeroApp: FC<IHeroAppProps> = props => {
         ID: Id
       }) : i))); 
       
-      _updateTitle(heroname, superpower, color, Id);
+      await _updateTitle(heroname, superpower, color, Id);
       
       setID(0);
       setTitle('');
@@ -123,6 +123,7 @@ export const HeroApp: FC<IHeroAppProps> = props => {
     setHeroState('Change');
   }
   
+ 
     const _readAllHeroItems = async (): Promise<void> => {
     try {
       //const spCache = spfi(_sp).using(Caching(cacheProps));
@@ -154,7 +155,7 @@ export const HeroApp: FC<IHeroAppProps> = props => {
     }
   }
 
-  const _createItem = async (Title: string, Power: string, Color: string, HeroId: number): Promise<void> => {
+   const _createItem = async (Title: string, Power: string, Color: string, HeroId: number): Promise<void> => {
     try {
       const iar: IItemAddResult = await _sp.web.lists.getByTitle("Demolist").items.add({
         Title: Title,
@@ -197,7 +198,7 @@ export const HeroApp: FC<IHeroAppProps> = props => {
     } catch (err) {
       //Logger.write(`${LOG_SOURCE} (_updateTitles) - ${JSON.stringify(err)} - `, LogLevel.Error);
     }
-  }
+  } 
 
   return (
     <div>  

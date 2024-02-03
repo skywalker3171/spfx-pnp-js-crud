@@ -71,7 +71,7 @@ const HeroEdit: FC<IHeroEditProps & IWTFState> = props => {
         <TextField label="Color" name="Color" value={Color} onChange={(e) => handleChangeColor((e.target as HTMLInputElement).value)} />
         <Button style={{
           padding: 10
-        }} appearance="primary" onClick={() => props.onClick(Title, Power, Color, props.HeroState, props.Id)}>Save</Button> 
+        }} appearance="primary" onClick={() => props.onClick(Title, Power, Color, props.HeroState, props.Id)}>{props.HeroState == 'Change' ? 'Save' : 'Add'}</Button> 
       </Stack>
       <Stack {...columnProps.current}>
         <TextField label="Power" name="superpower" value={Power} onChange={(e) => handleChangePower((e.target as HTMLInputElement).value)} />
